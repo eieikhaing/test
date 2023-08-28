@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_staffListFragment"
-            app:destination="@id/staffListFragment" />
+            app:destination="@id/staffListFragment"
+            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/staffListFragment"

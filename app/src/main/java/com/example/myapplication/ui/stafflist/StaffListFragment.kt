@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.stafflist
 
+import EmployeeDetailsData
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,21 +25,19 @@ class StaffListFragment : Fragment() {
 
         _binding = FragmentStaffListBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val adapter = StaffAdapter(loginViewModel.staffList.value ?: emptyList())
+        val employeeDetailsData = arguments?.getParcelable<EmployeeDetailsData>("employeeDetailsData")
+        var items = employeeDetailsData?.Items
+        var groups = employeeDetailsData?.Groups
+        val adapter = StaffAdapter(items ?: emptyList())
         binding.rvStaffList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStaffList.adapter = adapter
-        loginViewModel.staffList.observe(viewLifecycleOwner) { staffs ->
-            if (staffs.isNotEmpty()) {
-
-                adapter.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
 
 
-            }
-            /* var navController = findNavController()
-             navController.navigate(R.id.action_loginFragment_to_staffListFragment);*/
-
-
-        }
+        val personalDataAdapter = PersonalDataAdapter(groups ?: emptyList())
+        binding.rvPersonalData.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPersonalData.adapter = personalDataAdapter
+        adapter.notifyDataSetChanged()
         return root
     }
 
